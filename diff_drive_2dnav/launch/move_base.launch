@@ -1,0 +1,15 @@
+<launch>
+<!-- <master auto="start"/> -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find diff_drive_robot_sim)/maps/amazon_warehouse_map.yaml"/>
+    <include file="$(find amcl)/examples/amcl_diff.launch">
+    <!-- <arg name="initial_pose_x" /> -->
+    </include>
+    <node name="move_base" pkg="move_base" type="move_base" respawn="false" output="screen">
+        <rosparam file="$(find diff_drive_2dnav)/src/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
+        <rosparam file="$(find diff_drive_2dnav)/src/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find diff_drive_2dnav)/src/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find diff_drive_2dnav)/src/global_costmap_params.yaml" command="load" /> 
+        <rosparam file="$(find diff_drive_2dnav)/src/base_local_planner_params.yaml" command="load" />
+ </node>
+ 
+</launch>

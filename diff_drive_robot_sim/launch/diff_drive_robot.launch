@@ -1,0 +1,40 @@
+<launch>
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <!-- <arg name = "world_name" value = "$(find diff_drive_robot_sim)/worlds/diff_drive_test_world.world"/> -->
+        <arg name = "world_name" value = "$(find diff_drive_robot_sim)/worlds/aws-robomaker-small-warehouse-world-ros1/worlds/no_roof_small_warehouse.world"/>
+        <!-- <arg name="paused" default="false"/> -->
+            <!-- <arg name="verbose" value="true" /> -->
+    </include>
+    <node name = "teleop_twist_keyboard" pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" 
+     output= "screen"/>
+
+    <!-- <node name="diff_drive_model" pkg="gazebo_ros" type = "spawn_model"  -->
+     <!-- args = "-file $(find diff_drive_robot_sim)/models/diff_drive_model/model.sdf -sdf -model diff_drive_model"/> -->
+    
+    <node name="diff_drive_model" pkg="gazebo_ros" type = "spawn_model" 
+     args = "-file /home/harivignesh/model_editor_models/diff_drive_vehicle/model.sdf -sdf -model diff_drive_model" />
+     <!-- -x -10.0 -y -10.0 -z 0.0 -R 0.0 -P 0.0 -Y 0.0"/> -->
+
+    <!-- <node name="box" pkg="gazebo_ros" type="spawn_model" -->
+    <!-- args="-file /home/harivignesh/model_editor_models/unit_box/model.sdf -sdf -model box" /> -->
+    
+    <node name="diff_drive_odom_baselink_tf2_broadcaster" pkg="diff_drive_robot_description" 
+    type= "diff_drive_odom_baselink_tf2_broadcaster" />
+
+    <node name="diff_drive_map_odom_tf2_broadcaster" pkg="diff_drive_robot_description"
+    type="diff_drive_map_odom_tf2_broadcaster" />
+
+    <node name="diff_drive_baselink_lidar_tf2_broadcaster" pkg="diff_drive_robot_description"
+    type="diff_drive_baselink_lidar_tf2_broadcaster" />
+    
+    <!-- <node name="gmapping" pkg="gmapping" type="slam_gmapping" output="log"/> -->
+
+    <node name="rviz" pkg="rviz" type="rviz"
+    args="-d $(find diff_drive_robot_description)/src/rviz_diff_drive_config.rviz" />
+
+    <include file="$(find diff_drive_2dnav)/launch/move_base.launch" />
+
+    <!-- <node name="map_server" pkg="map_server" type="map_server" args="$(find diff_drive_robot_sim)/maps/amazon_warehouse_map.yaml"/> -->
+    
+    <!-- <node name="amcl" pkg="amcl" type="amcl"/> -->
+</launch>

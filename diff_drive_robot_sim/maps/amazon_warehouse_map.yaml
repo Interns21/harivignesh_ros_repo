@@ -1,0 +1,10 @@
+image: amazon_warehouse_map.pgm
+resolution: 0.050000
+# origin: [-19.749292, -3.423819, 0.000000]
+# origin: [0.0, 0.0, 0.0]
+# origin: [-7.000, -10.500000, 0.000000]
+origin: [-10.0, -10.0, 0.0]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+
