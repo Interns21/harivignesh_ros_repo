@@ -1,0 +1,1 @@
+This package contains the models and the world files necessary for the simulation.
